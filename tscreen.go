@@ -140,10 +140,15 @@ func (t *tScreen) Init() error {
 	if t.ti.SetFgBgRGB != "" || t.ti.SetFgRGB != "" || t.ti.SetBgRGB != "" {
 		t.truecolor = true
 	}
-	// A user who wants to have his themes honored can
-	// set this environment variable.
-	if os.Getenv("TCELL_TRUECOLOR") == "disable" {
+
+	// User override to force truecolor on or off; useful if the user cares
+	// about their terminal color scheme, or if they're running a pass-through
+	// like tmux or screen.
+	switch os.Getenv("TCELL_TRUECOLOR") {
+	case "disable":
 		t.truecolor = false
+	case "enable":
+		t.truecolor = true
 	}
 	if !t.truecolor {
 		t.colors = make(map[Color]Color)
