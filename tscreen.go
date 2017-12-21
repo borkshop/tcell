@@ -150,6 +150,10 @@ func (t *tScreen) Init() error {
 	case "enable":
 		t.truecolor = true
 	}
+
+	// TODO there are other variables one can use in practice, e.g. to detect
+	// iTerm2, libvte, etc
+
 	if !t.truecolor {
 		t.colors = make(map[Color]Color)
 		t.palette = make([]Color, t.Colors())
